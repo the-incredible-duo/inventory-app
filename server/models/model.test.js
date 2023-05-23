@@ -33,8 +33,12 @@ describe('Test item model', () => {
     it('has description', async () => {
         expect(item.description).toBe('The famous donuts from Dunkin');
     })
-    it('has category')
-    it('has image')
+    it('has category', async () => {
+        expect(item.category).toBe('food');
+    })
+    it('has image', async () => {
+        expect(item.image).toBe('imageUrl');
+    })
 })
 //Testing Models
 /**
