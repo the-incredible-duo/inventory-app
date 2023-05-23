@@ -27,8 +27,12 @@ describe('Test item model', () => {
     it('has title', async () => {
         expect(item.title).toBe('Dunkin donut');
     })
-    it('has description')
-    it('has price')
+    it('has price', async () => {
+        expect(item.price).toBe(5);
+    })
+    it('has description', async () => {
+        expect(item.description).toBe('The famous donuts from Dunkin');
+    })
     it('has category')
     it('has image')
 })
