@@ -1,6 +1,6 @@
-import React from "react";
-const request = require("../app");
+const request = require("supertest");
 const{ Sauce } = require("../models");
+const app = require("../models");
 
 describe("Routes", () => {
     let sauceId;
