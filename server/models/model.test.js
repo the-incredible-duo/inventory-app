@@ -1,7 +1,3 @@
-const { describe, it, expect, beforeAll, afterAll } = require('@jest/globals');
-const { Item } = require('./index.js');
-const { sequelize } = require('../db.js');
-
 //Testing Models
 /**
  * Define item variable in global scope
