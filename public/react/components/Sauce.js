@@ -16,7 +16,7 @@ export const Sauce = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch(`${apiURL}/sauces/${props.sauce.id}`, {
+    fetch(`${apiURL}/sauces/${props.sauce.id}`, {   // Make fetch request to update the item
       method: `PUT`,
       headers: {
         "Content-Type": "application/json",
@@ -24,10 +24,10 @@ export const Sauce = (props) => {
       body: JSON.stringify({name, image}),
     })
     .then((response) => response.json())
-    .then((updatedSauce) => {
+    .then((updatedSauce) => {   // Handle the updated sauce data
       console.log("Item updated", updatedSauce);
     })
-    .catch((error) => {
+    .catch((error) => {   // Handle the error if needed
       console.log("Error updating item: ", error);
     });
   }
@@ -49,4 +49,6 @@ export const Sauce = (props) => {
     </>
   );
 };
+
+Module.exports = Sauce;
 	

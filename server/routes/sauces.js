@@ -22,7 +22,7 @@ router.put("/:id", async (req, res, next) => {
     if (!sauce) {
       res.status(404).send("Item not found");
     } else {
-      await sauce.update({name, image});
+      await sauce.update({name, image});    // Update sauce with name and image values
       res,send(sauce);
     }
   } catch (error) {
