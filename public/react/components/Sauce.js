@@ -31,10 +31,21 @@ export const Sauce = (props) => {
     });
   }
 
-  return <>
-    <h3>{props.sauce.name}</h3>
-    <img src={props.sauce.image} alt={props.sauce.name} />
-  </>
-} 
+  return (
+    <>
+      <h3>{props.sauce.name}</h3>
+      <form onSubmit={handleSubmit}>
+          <label>
+            Name:
+            <input type="text" value={name} onChange={handleNameChange} />
+          </label>
+          <label>
+            Image URL:
+            <input type="text" value={image} onChange={handleImageChange} />
+          </label>
+          <button type="submit">Update</button>
+        </form>
+    </>
+  );
+};
 	
-// Hello
