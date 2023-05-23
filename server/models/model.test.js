@@ -1,5 +1,6 @@
 //Testing Models
 /**
+ * Import files needed
  * Define item variable in global scope
  * Make sure to wipe db before new tests
  * Clear db after tests
