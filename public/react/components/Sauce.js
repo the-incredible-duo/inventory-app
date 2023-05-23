@@ -14,7 +14,7 @@ export const Sauce = (props) => {
     setImage(event.target.value);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event) => {   // Fetch request to update item when form is submitted
     event.preventDefault();
     fetch(`${apiURL}/sauces/${props.sauce.id}`, {   // Make fetch request to update the item
       method: `PUT`,
@@ -32,7 +32,7 @@ export const Sauce = (props) => {
     });
   }
 
-  return (
+  return (  // Edit form on Single Item View
     <>
       <h3>{props.sauce.name}</h3>
       <form onSubmit={handleSubmit}>

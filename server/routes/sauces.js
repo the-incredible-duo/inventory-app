@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {    // Express Route to UPDATE the Item
   const { id } = req.params;  // Contains the properties mapped to id
   const{ name, image } = req.body;    // Allows access of data from the client side
 
