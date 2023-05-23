@@ -1,7 +1,32 @@
+// Import files needed
 const { describe, it, expect, beforeAll, afterAll } = require('@jest/globals');
 const { Item } = require('./index.js');
 const { sequelize } = require('../db.js');
 
+// Define item variable in global scope
+let item;
+// Make sure to wipe db before new tests
+beforeAll(async () => {
+    await sequelize.sync({ force: true });
+    item = await Item.create({
+        title: 'Dunkin donut',
+        price: 5,
+        description: 'The famous donuts from Dunkin',
+        category: 'food',
+        image: 'imageUrl'
+    })
+})
+// Clear db after tests
+afterAll(async () => sequelize.sync({ force: true}));
+
+//Test properties
+describe('Test item model', () => {
+    it('has title')
+    it('has description')
+    it('has price')
+    it('has category')
+    it('has image')
+})
 //Testing Models
 /**
  * Import files needed
@@ -9,7 +34,7 @@ const { sequelize } = require('../db.js');
  * Make sure to wipe db before new tests
  * Clear db after tests
  * Test for:
- * -name
+ * -title
  * -description
  * -prices
  * -category
@@ -18,7 +43,7 @@ const { sequelize } = require('../db.js');
  * beforeAll(async () => {
  *      await db.sync({force: true})
  *      item = await Item.create({
- *          name: ''
+ *          title: ''
  *          description: ''
  *          prices: ''
  *          category: ''
