@@ -25,8 +25,8 @@ describe("Routes", () => {
     test("PUT /sauces/:id should update the sauce", async () => {
         const updatedData = { name: "Updated item", image: "updated-image.jpg" };
         const response = await request(app)
-            .put("/sauces/${sauceId}")
-            .send(updatedData);
+            .put(`/sauces/${sauceId}`)                  // Holds the ID as a key within the parameter
+            .send(updatedData);                         // Sends the request of the updated data to the server
 
         expect(response.statusCode).toBe(200);
         expect(response.body.name).toBe(updatedData.name);
@@ -38,8 +38,8 @@ describe("Routes", () => {
         const updatedData = { name: "Updated item", image: "updated-image" };
 
         const response = await request(app)
-            .put(`/sauces/${nonExistentItemId}`)
-            .send(updatedData);
+            .put(`/sauces/${nonExistentItemId}`)        // Holds the non-existent item as a key within the parameter
+            .send(updatedData);                         // Sends the request to the server
 
         expect(response.statusCode).toBe(404);
         expect(response.text).toBe("Item not found");
