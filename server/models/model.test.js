@@ -21,7 +21,12 @@ afterAll(async () => sequelize.sync({ force: true}));
 
 //Test properties
 describe('Test item model', () => {
-    it('has title')
+    it('has id', async () => {
+        expect(item).toHaveProperty('id');
+    })
+    it('has title', async () => {
+        expect(item.title).toBe('Dunkin donut');
+    })
     it('has description')
     it('has price')
     it('has category')
