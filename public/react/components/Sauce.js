@@ -50,5 +50,5 @@ export const Sauce = (props) => {
   );
 };
 
-Module.exports = Sauce;
+module.exports = Sauce;
 	
