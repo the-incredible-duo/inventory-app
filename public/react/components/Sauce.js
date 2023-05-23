@@ -7,7 +7,7 @@ export const Sauce = (props) => {
   const[image, setImage] = useState(props.sauce.event);
 
   const handleNameChange = (event) => {
-    setName(event.target.value);
+    setName(event.target.value);    // Calls the current event handler
   }
 
   const handleImageChange = (event) => {
@@ -21,7 +21,7 @@ export const Sauce = (props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({name, image}),
+      body: JSON.stringify({name, image}),  // Converts values to JSON strings
     })
     .then((response) => response.json())
     .then((updatedSauce) => {   // Handle the updated sauce data
