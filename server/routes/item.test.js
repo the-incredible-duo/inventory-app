@@ -8,29 +8,23 @@ describe("Inventory Tracking App", () => {
 
   beforeAll((done) => {
     // Start the server before running the tests
-    serverProcess = spawn("node", ["server.js"]);
-
-    serverProcess.stdout.on("data", (data) => {
-      const output = data.toString();
-      if (output.includes("Server started successfully")) {
+    serverProcess = exec("node server.js", (error, stdout, stderr) => {
+      if (error) {
+        console.error("Failed to start the server:", error);
+        done(error);
+      } else {
         console.log("Server started successfully");
         done();
       }
-    });
-
-    serverProcess.stderr.on("data", (data) => {
-      console.error("Failed to start the server:", data.toString());
-      done(data.toString());
     });
   });
 
   afterAll((done) => {
     // Stop the server after running the tests
-    if (serverProcess) {
-      serverProcess.kill();
-    }
+    serverProcess.kill();
     done();
   });
+
   describe("Tier I: MVP Application", () => {
     test("should retrieve all items from the inventory", async () => {
       const response = await fetch(`${serverUrl}/items`);
