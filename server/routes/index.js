@@ -1,6 +1,3 @@
-/**
- * Testing use router
- * Import files needed
- * - require express
- * - require router
- */
+const { Router } = require('express');
+
+Router.use('/items', require('./items'));
