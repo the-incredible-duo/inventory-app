@@ -4,7 +4,7 @@ import { Item } from './Item';
 export const ItemsList = ({items}) => {
     return <>
         {
-            items.map((sauce, index) => {
+            items.map((item, index) => {
                 return <Item item={item} key={index}/>
             })
         }

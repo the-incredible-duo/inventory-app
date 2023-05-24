@@ -18,9 +18,16 @@ export const App = () => {
         fetchItem();
     },[]);
     
-    return(
-        <>
-            <h1>Inventory Items</h1>
-        </>
-    )
+    function cardItem(){
+        return(
+            <main>
+                <Card style={{width: '18rems'}}/>
+                <Card.Img variant='top' src='holder.js/100px180'/>
+                <Card.Body>
+                    <Card.Title>{item.title}</Card.Title>
+                    <Card.Text>{item.description}</Card.Text>
+                </Card.Body>
+            </main>
+        )
+    }
 }
