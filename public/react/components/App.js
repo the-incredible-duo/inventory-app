@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ItemsList } from './ItemList';
 import apiURL from '../api.js';
+import Card from 'react-bootstrap/Card';
 
 export const App = () => {
     const[items, setItems] = useState([]);
