@@ -13,4 +13,7 @@ export const App = () => {
             console.log('Oh an error!',err)
         }
     }
+    useEffect(() => {
+        fetchItem();
+    },[]);
 }
