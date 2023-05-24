@@ -1,7 +1,8 @@
-const { Router } = require('express');
+const express = require('express');
+const router = express.Router();
 const { Item } = require('../models/index.js');
 
-Router.get('/items', async(req, res, next) => {
+router.get('/items', async(req, res, next) => {
     try{
         const items = await Item.findAll();
         res.send(items);
@@ -10,7 +11,7 @@ Router.get('/items', async(req, res, next) => {
     }
 })
 
-Router.get('/items/:id', async(req, res, next) => {
+router.get('/items/:id', async(req, res, next) => {
     try{
         const { id } = req.params;
         const item = await Item.findByPk(id);
@@ -19,4 +20,4 @@ Router.get('/items/:id', async(req, res, next) => {
         next(error);
     }
 })
-module.exports = Router ;
+module.exports = router ;
