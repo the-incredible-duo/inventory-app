@@ -44,7 +44,7 @@ export const Sauce = (props) => {
             Image URL:
             <input type="text" value={image} onChange={handleImageChange} />
           </label>
-          <button type="submit">Update</button>
+          <button onClick={handleSubmit} type="submit">Update</button>
         </form>
     </>
   );
