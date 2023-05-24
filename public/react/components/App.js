@@ -16,4 +16,10 @@ export const App = () => {
     useEffect(() => {
         fetchItem();
     },[]);
+    
+    return(
+        <>
+            <h1>Inventory Items</h1>
+        </>
+    )
 }
