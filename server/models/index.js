@@ -3,7 +3,7 @@ const { sequelize } = require('../db.js');
 
 const Item = sequelize.define('item',{
     title: DataTypes.STRING,
-    price: DataTypes.INTEGER,
+    price: DataTypes.FLOAT,
     description: DataTypes.STRING,
     category: DataTypes.STRING,
     image: DataTypes.STRING
