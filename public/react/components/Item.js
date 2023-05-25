@@ -11,7 +11,6 @@ export const Item = (props) => {
             <Card.Title>{item.title}</Card.Title>
             <Card.Text>{item.description}</Card.Text>
         </Card.Body>
-        <h1>Hello!</h1>
     </>
 }
 	

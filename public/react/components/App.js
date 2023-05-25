@@ -18,12 +18,10 @@ export const App = () => {
         fetchItem();
     },[]);
     
-    // function cardItem(){
         return(
             <main>
 
             <ItemsList items={items}/>
             </main>
         )
-    // }
 }
