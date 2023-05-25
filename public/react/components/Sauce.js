@@ -2,12 +2,12 @@ import React from 'react';
 import {  useState, useEffect } from "react";
 import { router } from "./server/routes/sauces.js";
 
-export const Sauce = (props) => {
-  const[name, setName] = useState(props.sauce.name);
+export const Item = (props) => {
+  const[title, setTitle] = useState(props.sauce.title);
   const[image, setImage] = useState(props.sauce.event);
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);    // Calls the current event handler
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);    // Calls the current event handler
   }
 
   const handleImageChange = (event) => {
@@ -16,16 +16,16 @@ export const Sauce = (props) => {
 
   const handleSubmit = (event) => {   // Fetch request to update item when form is submitted
     event.preventDefault();
-    fetch(`${apiURL}/sauces/${props.sauce.id}`, {   // Make fetch request to update the item
+    fetch(`${apiURL}/items/${props.items.id}`, {   // Make fetch request to update the item
       method: `PUT`,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({name, image}),  // Converts values to JSON strings
+      body: JSON.stringify({title, image}),  // Converts values to JSON strings
     })
     .then((response) => response.json())
-    .then((updatedSauce) => {   // Handle the updated sauce data
-      console.log("Item updated", updatedSauce);
+    .then((updatedItem) => {   // Handle the updated sauce data
+      console.log("Item updated", updatedItem);
     })
     .catch((error) => {   // Handle the error if needed
       console.log("Error updating item: ", error);
@@ -34,11 +34,11 @@ export const Sauce = (props) => {
 
   return (  // Edit form on Single Item View
     <>
-      <h3>{props.sauce.name}</h3>
+      <h3>{props.items.name}</h3>
       <form onSubmit={handleSubmit}>
           <label>
             Name:
-            <input type="text" value={name} onChange={handleNameChange} />
+            <input type="text" value={title} onChange={handleTitleChange} />
           </label>
           <label>
             Image URL:
@@ -50,5 +50,5 @@ export const Sauce = (props) => {
   );
 };
 
-module.exports = Sauce;
+module.exports = Item;
 	
