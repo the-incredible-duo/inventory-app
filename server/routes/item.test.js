@@ -54,7 +54,7 @@ describe("Inventory Tracking App", () => {
   describe("Tier II: Adding an Item", () => {
     test("should add an item to the inventory", async () => {
       const newItem = {
-        name: "New Item",
+        title: "New Item",
         description: "A newly added item",
         price: 19.99,
         category: "Miscellaneous",
@@ -88,7 +88,7 @@ describe("Inventory Tracking App", () => {
 
     test("should add an item to the inventory when the form is submitted", async () => {
       const newItem = {
-        name: "New Item",
+        title: "New Item",
         description: "A newly added item",
         price: 19.99,
         category: "Miscellaneous",
@@ -117,7 +117,7 @@ describe("Inventory Tracking App", () => {
     beforeAll(async () => {
       // Add an item to delete
       const newItem = {
-        name: "Item to Delete",
+        title: "Item to Delete",
         description: "An item to be deleted",
         price: 9.99,
         category: "Miscellaneous",
@@ -152,7 +152,7 @@ describe("Inventory Tracking App", () => {
     beforeAll(async () => {
       // Add an item to delete
       const newItem = {
-        name: "Item to Delete",
+        title: "Item to Delete",
         description: "An item to be deleted",
         price: 9.99,
         category: "Miscellaneous",
@@ -197,7 +197,7 @@ describe("Inventory Tracking App", () => {
     beforeAll(async () => {
       // Add an item to update
       const newItem = {
-        name: "Item to Update",
+        title: "Item to Update",
         description: "An item to be updated",
         price: 14.99,
         category: "Miscellaneous",
@@ -218,7 +218,7 @@ describe("Inventory Tracking App", () => {
 
     test("should update an item in the inventory", async () => {
       const updatedItem = {
-        name: "Updated Item",
+        title: "Updated Item",
         description: "An item that has been updated",
         price: 24.99,
         category: "Miscellaneous",
@@ -253,7 +253,7 @@ describe("Tier IV: Updating an Item", () => {
   beforeAll(async () => {
     // Add an item to update
     const newItem = {
-      name: "Item to Update",
+      title: "Item to Update",
       description: "An item to be updated",
       price: 14.99,
       category: "Miscellaneous",
@@ -283,7 +283,7 @@ describe("Tier IV: Updating an Item", () => {
 
   test("should update an item in the inventory when the form is submitted", async () => {
     const updatedItem = {
-      name: "Updated Item",
+      title: "Updated Item",
       description: "An item that has been updated",
       price: 24.99,
       category: "Miscellaneous",
