@@ -1,6 +1,5 @@
 const fetch = require("node-fetch");
-const { exec } = require("child_process");
-
+const { spawn } = require("child_process");
 const serverUrl = "http://localhost:3000";
 
 describe("Inventory Tracking App", () => {
@@ -8,29 +7,38 @@ describe("Inventory Tracking App", () => {
 
   beforeAll((done) => {
     // Start the server before running the tests
+    jest.setTimeout(10000);
     serverProcess = spawn("node", ["server.js"]);
 
+    // Listen for the server process to print a specific message indicating that the server has started
     serverProcess.stdout.on("data", (data) => {
-      const output = data.toString();
-      if (output.includes("Server started successfully")) {
+      const message = data.toString();
+      if (message.includes("Server started")) {
         console.log("Server started successfully");
         done();
       }
     });
 
-    serverProcess.stderr.on("data", (data) => {
-      console.error("Failed to start the server:", data.toString());
-      done(data.toString());
+    // Listen for any errors from the server process
+    serverProcess.on("error", (error) => {
+      console.error("Failed to start the server:", error);
+      done(error);
     });
   });
 
   afterAll((done) => {
     // Stop the server after running the tests
     if (serverProcess) {
+      serverProcess.on("exit", () => {
+        console.log("Server process terminated");
+        done();
+      });
       serverProcess.kill();
+    } else {
+      done();
     }
-    done();
   });
+
   describe("Tier I: MVP Application", () => {
     test("should retrieve all items from the inventory", async () => {
       const response = await fetch(`${serverUrl}/items`);
