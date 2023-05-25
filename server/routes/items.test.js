@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
-const { spawn } = require("child_process");
+const { exec } = require("child_process");
+
 const serverUrl = "http://localhost:3000";
 
 describe("Inventory Tracking App", () => {
@@ -7,38 +8,29 @@ describe("Inventory Tracking App", () => {
 
   beforeAll((done) => {
     // Start the server before running the tests
-    jest.setTimeout(10000);
-    serverProcess = spawn("node", ["server.js"]);
-
-    // Listen for the server process to print a specific message indicating that the server has started
-    serverProcess.stdout.on("data", (data) => {
-      const message = data.toString();
-      if (message.includes("Server started")) {
+    serverProcess = exec("node server.js", (error, stdout, stderr) => {
+      if (error) {
+        console.error("Failed to start the server:", error);
+        done(error);
+      } else {
         console.log("Server started successfully");
         done();
       }
     });
 
-    // Listen for any errors from the server process
-    serverProcess.on("error", (error) => {
-      console.error("Failed to start the server:", error);
-      done(error);
+    serverProcess.stderr.on("data", (data) => {
+      console.error("Failed to start the server:", data.toString());
+      done(data.toString());
     });
   });
 
   afterAll((done) => {
     // Stop the server after running the tests
     if (serverProcess) {
-      serverProcess.on("exit", () => {
-        console.log("Server process terminated");
-        done();
-      });
       serverProcess.kill();
-    } else {
-      done();
     }
+    done();
   });
-
   describe("Tier I: MVP Application", () => {
     test("should retrieve all items from the inventory", async () => {
       const response = await fetch(`${serverUrl}/items`);
@@ -62,7 +54,7 @@ describe("Inventory Tracking App", () => {
   describe("Tier II: Adding an Item", () => {
     test("should add an item to the inventory", async () => {
       const newItem = {
-        title: "New Item",
+        name: "New Item",
         description: "A newly added item",
         price: 19.99,
         category: "Miscellaneous",
@@ -96,7 +88,7 @@ describe("Inventory Tracking App", () => {
 
     test("should add an item to the inventory when the form is submitted", async () => {
       const newItem = {
-        title: "New Item",
+        name: "New Item",
         description: "A newly added item",
         price: 19.99,
         category: "Miscellaneous",
@@ -125,7 +117,7 @@ describe("Inventory Tracking App", () => {
     beforeAll(async () => {
       // Add an item to delete
       const newItem = {
-        title: "Item to Delete",
+        name: "Item to Delete",
         description: "An item to be deleted",
         price: 9.99,
         category: "Miscellaneous",
@@ -160,7 +152,7 @@ describe("Inventory Tracking App", () => {
     beforeAll(async () => {
       // Add an item to delete
       const newItem = {
-        title: "Item to Delete",
+        name: "Item to Delete",
         description: "An item to be deleted",
         price: 9.99,
         category: "Miscellaneous",
@@ -205,7 +197,7 @@ describe("Inventory Tracking App", () => {
     beforeAll(async () => {
       // Add an item to update
       const newItem = {
-        title: "Item to Update",
+        name: "Item to Update",
         description: "An item to be updated",
         price: 14.99,
         category: "Miscellaneous",
@@ -226,7 +218,7 @@ describe("Inventory Tracking App", () => {
 
     test("should update an item in the inventory", async () => {
       const updatedItem = {
-        title: "Updated Item",
+        name: "Updated Item",
         description: "An item that has been updated",
         price: 24.99,
         category: "Miscellaneous",
@@ -261,7 +253,7 @@ describe("Tier IV: Updating an Item", () => {
   beforeAll(async () => {
     // Add an item to update
     const newItem = {
-      title: "Item to Update",
+      name: "Item to Update",
       description: "An item to be updated",
       price: 14.99,
       category: "Miscellaneous",
@@ -291,7 +283,7 @@ describe("Tier IV: Updating an Item", () => {
 
   test("should update an item in the inventory when the form is submitted", async () => {
     const updatedItem = {
-      title: "Updated Item",
+      name: "Updated Item",
       description: "An item that has been updated",
       price: 24.99,
       category: "Miscellaneous",
