@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Card from 'react-bootstrap/Card';
-import apiURL from '../api.js';
+import Card from "react-bootstrap/Card";
+import apiURL from "../api.js";
 
 export const Item = (props) => {
   const { item } = props;
@@ -9,11 +9,11 @@ export const Item = (props) => {
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
-  }
+  };
 
   const handleImageChange = (event) => {
     setImage(event.target.value);
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -31,12 +31,12 @@ export const Item = (props) => {
       .catch((error) => {
         console.log("Error updating item:", error);
       });
-  }
+  };
 
   return (
     <>
       <h1>{item.title}</h1>
-      <Card style={{ width: '18rem' }}>
+      <Card style={{ width: "18rem" }}>
         <Card.Img variant="top" src={item.image} alt={item.title} />
         <Card.Body>
           <Card.Title>{item.title}</Card.Title>
@@ -58,4 +58,4 @@ export const Item = (props) => {
       </form>
     </>
   );
-}
+};

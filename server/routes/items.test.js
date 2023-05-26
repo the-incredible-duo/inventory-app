@@ -1,36 +1,36 @@
 const fetch = require("node-fetch");
-const { exec } = require("child_process");
+const { spawn } = require("child_process");
 
 const serverUrl = "http://localhost:3000";
 
 describe("Inventory Tracking App", () => {
   let serverProcess;
 
-  beforeAll((done) => {
-    // Start the server before running the tests
-    serverProcess = exec('node server.js', (error, stdout, stderr) => {
-      if (error) {
-        console.error('Failed to start the server:', error);
-        done(error);
-      } else {
-        console.log('Server started successfully');
-        done();
-      }
-    });
+  // beforeAll((done) => {
+  //     serverProcess = spawn("node", ["server.js"]);
 
-    serverProcess.stderr.on("data", (data) => {
-      console.error("Failed to start the server:", data.toString());
-      done(data.toString());
-    });
-  });
+  //     serverProcess.stdout.on("data", (data) => {
+  //       const message = data.toString();
+  //       if (message.includes("Server started")) {
+  //         console.log("Server started successfully");
+  //         done();
+  //       }
+  //     });
 
-  afterAll((done) => {
-    // Stop the server after running the tests
-    if (serverProcess) {
-      serverProcess.kill();
-    }
-    done();
-  });
+  //     serverProcess.on("error", (error) => {
+  //       console.error("Failed to start the server:", error);
+  //       done(error);
+  //     });
+  //   });
+
+  // afterAll((done) => {
+  //   serverProcess.on("exit", () => {
+  //     console.log("Server process terminated");
+  //     done();
+  //   });
+  //   serverProcess.kill();
+  // });
+
   describe("Tier I: MVP Application", () => {
     test("should retrieve all items from the inventory", async () => {
       const response = await fetch(`${serverUrl}/items`);
@@ -40,13 +40,13 @@ describe("Inventory Tracking App", () => {
     });
 
     test("should retrieve a specific item from the inventory", async () => {
-      const responseAll = await fetch(`${serverUrl}/items`);
-      const items = await responseAll.json();
-      const itemId = items[0].id;
+      const allItemsResponse = await fetch(`${serverUrl}/items`);
+      const allItems = await allItemsResponse.json();
+      const itemId = allItems[0].id;
 
-      const responseSingle = await fetch(`${serverUrl}/items/${itemId}`);
-      const item = await responseSingle.json();
-      expect(responseSingle.status).toBe(200);
+      const itemResponse = await fetch(`${serverUrl}/items/${itemId}`);
+      const item = await itemResponse.json();
+      expect(itemResponse.status).toBe(200);
       expect(item).toBeDefined();
     });
   });
@@ -75,8 +75,7 @@ describe("Inventory Tracking App", () => {
       expect(createdItem.name).toBe(newItem.name);
       // Add more assertions for other properties
     });
-  });
-  describe("Tier II: Adding an Item 2", () => {
+
     test("should render an add item form on the front-end", async () => {
       const response = await fetch(`${serverUrl}/add-item`);
       const body = await response.text();
@@ -144,31 +143,6 @@ describe("Inventory Tracking App", () => {
       const data = await response.json();
       expect(response.status).toBe(200);
       expect(data.message).toBe("Item deleted successfully!");
-    });
-  });
-  describe("Tier III: Deleting an Item2", () => {
-    let itemIdToDelete;
-
-    beforeAll(async () => {
-      // Add an item to delete
-      const newItem = {
-        name: "Item to Delete",
-        description: "An item to be deleted",
-        price: 9.99,
-        category: "Miscellaneous",
-        image: "delete-item.jpg",
-      };
-
-      const response = await fetch(`${serverUrl}/items`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newItem),
-      });
-
-      const createdItem = await response.json();
-      itemIdToDelete = createdItem.id;
     });
 
     test("should render a delete button on the single item view", async () => {
@@ -245,62 +219,37 @@ describe("Inventory Tracking App", () => {
       expect(item.name).toBe(updatedItem.name);
       // Add more assertions for other updated properties if needed
     });
-  });
-});
-describe("Tier IV: Updating an Item", () => {
-  let itemIdToUpdate;
 
-  beforeAll(async () => {
-    // Add an item to update
-    const newItem = {
-      name: "Item to Update",
-      description: "An item to be updated",
-      price: 14.99,
-      category: "Miscellaneous",
-      image: "update-item.jpg",
-    };
-
-    const response = await fetch(`${serverUrl}/items`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newItem),
+    test("should render an edit form on the single item view", async () => {
+      const response = await fetch(`${serverUrl}/items/${itemIdToUpdate}/edit`);
+      const body = await response.text();
+      expect(response.status).toBe(200);
+      expect(body.includes("<h1>Edit Item</h1>")).toBe(true);
+      expect(body.includes("<form id='editItemForm'")).toBe(true);
+      // Add more assertions for form elements if needed
     });
 
-    const createdItem = await response.json();
-    itemIdToUpdate = createdItem.id;
-  });
+    test("should update an item in the inventory when the form is submitted", async () => {
+      const updatedItem = {
+        name: "Updated Item",
+        description: "An item that has been updated",
+        price: 24.99,
+        category: "Miscellaneous",
+        image: "updated-item.jpg",
+      };
 
-  test("should render an edit form on the single item view", async () => {
-    const response = await fetch(`${serverUrl}/items/${itemIdToUpdate}/edit`);
-    const body = await response.text();
-    expect(response.status).toBe(200);
-    expect(body.includes("<h1>Edit Item</h1>")).toBe(true);
-    expect(body.includes("<form id='editItemForm'")).toBe(true);
-    // Add more assertions for form elements if needed
-  });
+      const response = await fetch(`${serverUrl}/items/${itemIdToUpdate}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedItem),
+      });
 
-  test("should update an item in the inventory when the form is submitted", async () => {
-    const updatedItem = {
-      name: "Updated Item",
-      description: "An item that has been updated",
-      price: 24.99,
-      category: "Miscellaneous",
-      image: "updated-item.jpg",
-    };
-
-    const response = await fetch(`${serverUrl}/items/${itemIdToUpdate}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedItem),
+      const updatedData = await response.json();
+      expect(response.status).toBe(200);
+      expect(updatedData.message).toBe("Item updated successfully!");
+      // Add more assertions if needed
     });
-
-    const updatedData = await response.json();
-    expect(response.status).toBe(200);
-    expect(updatedData.message).toBe("Item updated successfully!");
-    // Add more assertions if needed
   });
 });
