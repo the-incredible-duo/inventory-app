@@ -18,3 +18,7 @@ const Item = sequelize.define("item", {
     type: DataTypes.STRING,
   },
 });
+
+module.exports = {
+    Item
+}
